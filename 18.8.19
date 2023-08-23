@@ -1,0 +1,14 @@
+amount = 0
+number_ticket = int(input('Введите количество билетов: '))
+for age in range(number_ticket):
+    age = int(input('Введите возраст посетителя: '))
+    if age < 18:
+        amount += 0
+    elif 18 <= age <= 25:
+        amount += 990
+    elif age > 25:
+        amount += 1390
+if number_ticket >= 3:
+    amount = amount - amount * 0.1
+amount = str(amount)
+print('Итого к оплате ' + (amount))
