@@ -1,1 +1,116 @@
+students = ['Аполлон', 'Ярослав', 'Александра', 'Дарья', 'Ангелина']
+classes = ['Математика', 'Русский язык', 'Информатика']
+assessment = [4, 5, 3]
+school_assessment = {students[0]:
+                         {classes[0]:assessment[1],
+                          classes[1]: assessment[0],
+                          classes[2]: assessment[2]},
+                     students[1]:
+                         {classes[0]: assessment[0],
+                          classes[1]: assessment[1],
+                          classes[2]: assessment[2]},
+                     students[2]:
+                         {classes[0]: assessment[1],
+                          classes[1]: assessment[2],
+                          classes[2]: assessment[0]},
+                     students[3]:
+                         {classes[0]: assessment[2],
+                          classes[1]: assessment[2],
+                          classes[2]: assessment[1]},
+                     students[4]:
+                         {classes[0]: assessment[1],
+                          classes[1]: assessment[1],
+                          classes[2]: assessment[0]}}
+for key, value in school_assessment.items():
+    print(f'{key} - {value}')
 
+print('''
+Список команд:
+1. Добавить оценки ученика по предмету
+2. Вывести средний балл по всем предметам по каждому ученику
+3. Вывести все оценки по всем ученикам
+4. Выход из программы
+5. Удалить ученика
+6. Вывести все оценки для определенного ученика
+7. Вывести средний балл по каждому предмету по определенному ученику
+''')
+
+while True:
+    command = int(input('Введите команду: '))
+    if command == 1:
+        print('1. Добавить оценку ученика по предмету')
+            # считываем имя ученика
+        student = input('Введите имя ученика: ')
+            # считываем название предмета
+        class_ = input('Введите предмет: ')
+            # считываем оценку
+        mark = int(input('Введите оценку: '))
+        if student in school_assessment.keys() and class_ in school_assessment[student].keys():
+            [school_assessment[student][class_]].append(mark)
+            print(f'Для {student} по предмету {class_} добавлена оценка {mark}')
+        else:
+            print('ОШИБКА: неверное имя ученика или название предмета')
+    elif command == 2:
+        print('2. Вывести средний балл по всем предметам по каждому ученику')
+
+        for student in students:
+            print(student)
+            for class_ in classes:
+                school_assessment[student][class_] = assessment
+                assessment_sum = sum(list(map(int, school_assessment[student][class_])))
+        # находим количество оценок по предмету
+                assessment_count = len(school_assessment[student][class_])
+        # выводим средний балл по предмету
+                print(f'{class_} - {assessment_sum // assessment_count}')
+            print()
+    elif command == 3:
+        print('3. Вывести все оценки по всем ученикам')
+
+        for student in students:
+            print(student)
+            # цикл по предметам
+            for class_ in classes:
+                    print(f'\t{class_} - {school_assessment[student][class_]}')
+            print()
+
+
+    elif command == 5:
+        print('5. Удалить ученика')
+
+        end_student = input('Введите ученика, которого хотите удалить: ')
+        if end_student in school_assessment:
+            del school_assessment[end_student]
+            print(school_assessment)
+        else:
+            print('Этого ученика нет в списке')
+
+    elif command == 6:
+        print('6. Вывести все оценки для определенного ученика')
+        if command == 6:
+            student = input('Введите имя ученика: ')
+            if student in school_assessment.keys():
+                print(f'Для {student} выведены оценки')
+                for subj, marks in school_assessment[student].items():
+                    print(subj + ",", marks)
+            else:
+                print('ОШИБКА: Этого ученика нет в списке')
+
+    elif command == 7:
+        print('7. Вывести средний балл по каждому предмету по определенному ученику')
+        student = input('Введите имя ученика: ')
+        if student in school_assessment.keys():
+            print(f'Для {student} выведен средний балл по каждому предмету')
+            for class_ in classes:
+                school_assessment[student][class_] = assessment
+                assessment_sum = sum(list(map(int, school_assessment[student][class_])))
+        # находим количество оценок по предмету
+                assessment_count = len(school_assessment[student][class_])
+        # выводим средний балл по предмету
+                print(f'{class_} - {assessment_sum // assessment_count}')
+            print()
+        else:
+            print('ОШИБКА: Этого ученика нет в списке')
+
+    elif command == 4:
+        print('4. Выход из программы')
+        break
